@@ -1,5 +1,5 @@
 {
-  "name": "coordinate-rebase",
+  "name": "coordinate-rebaser",
   "version": "0.0.1",
   "main": "dist/coordinate-rebase.umd.js",
   "module": "dist/coordinate-rebase.umd.js",
