@@ -1,9 +1,9 @@
 # Coordinate Rebase
 This is a scriptless container component for changing the behavior of css height/width percentage measurements.
 
-Percentage measurements depend on the nearest DOM ancestor with a fixed height or width, but newer css rules (e.g. flex, grid) don't often negate the need for fixed heights.
+Percentage measurements depend on the nearest DOM ancestor with a fixed height or width, but css rules like flex & grid typically avoid using fixed heights.
 
-These components wrap content in a 2-layer div that leverages browser `display: table` and `display: table-cell` rendering rules to effectively inject an element that "catches" its descendants' percentage height rules. Instead of referencing the nearest fixed-height ancestory, descendants with %-height rules will use these component's resolved height/width measurements for reference.
+Components in this package wrap content in a set of 2 divs that leverage browser `display: table` and `display: table-cell` rendering rules to effectively "catch" descendants' percentage height rules. Instead of referencing the nearest fixed-height ancestory, descendants with %-height rules will use these components' resolved height/width measurements for reference.
 
 ## Usage
 Import the components in script setup:
@@ -87,7 +87,7 @@ Styles:
 ## How it works
 Absolute coordinate scope in CSS uses the nearest ancestor with `position: relative` as its reference anchor. (If no ancestor has explicit `position: relative`, it uses the body element as its coordinate reference).
 
-When position is set to `absolute`, however, `height/width: 100%` calculates the pixel value of 100% using the nearest ancestor with an explicit `height/width: ---px` css rule. (It skips elements with `height/width: --%`) If no ancestor has an explicit pixel value height/width rule, it uses the body element's height/width.
+When position is set to `absolute`, however, `height/width: 100%` calculate the pixel value of 100% using the nearest ancestor with an explicit `height/width: ---px` css rule. (They skip elements with `height/width: --%`) If no ancestor has an explicit pixel value height/width rule, it uses the body element's height/width.
 
 Lastly, an element with `display: table-cell` inside an element with `display: table` has its height/width css rules ignored. A table-cell will ALWAYS fill 100% of its immmediate table parent.
 
