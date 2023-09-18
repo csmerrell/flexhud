@@ -3,6 +3,11 @@
   "version": "0.0.6",
   "main": "dist/coordinate-rebase.umd.js",
   "module": "dist/coordinate-rebase.umd.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "dist/*",
+    "src/index.d.ts"
+  ],
   "peerDependencies": {
     "vue": "^3.3.4"
   },
