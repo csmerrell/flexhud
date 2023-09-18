@@ -1,6 +1,6 @@
 {
   "name": "coordinate-rebase",
-  "version": "0.0.7",
+  "version": "0.0.1",
   "main": "dist/coordinate-rebase.umd.js",
   "module": "dist/coordinate-rebase.umd.js",
   "types": "src/index.d.ts",
