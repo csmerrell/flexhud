@@ -47,7 +47,7 @@ Width Rebaser Markup Example:
           {{idx}}
         </div>
         <WidthRebaser v-else class="idx-abs">
-          <!-- These ones will use the dimensions of `#Child 2-wrapper` to compute left: 100%" -->
+          <!-- These ones will use the dimensions of their immediate parent to compute left: 100%" -->
           {{idx}}
         </WidthRebaser>
       </div>
