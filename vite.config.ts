@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: './src/index.ts',
-      name: 'MyVue3Library'
+      name: 'CoordinateRebase'
     },
     rollupOptions: {
       external: ['vue'],
