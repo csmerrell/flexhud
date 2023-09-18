@@ -1,5 +1,7 @@
-import type { DefineComponent } from "vue";
+import type { DefineComponent, VNodeProps } from "vue";
 
-export declare const BoxRebaser: DefineComponent<{}, {}, any>;
-export declare const WidthRebaser: DefineComponent<{}, {}, any>;
-export declare const HeightRebaser: DefineComponent<{}, {}, any>;
+interface RebaserProps extends VNodeProps {}
+
+export declare const BoxRebaser: DefineComponent<VNodeProps, {}, any>;
+export declare const WidthRebaser: DefineComponent<VNodeProps, {}, any>;
+export declare const HeightRebaser: DefineComponent<VNodeProps, {}, any>;
