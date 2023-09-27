@@ -1,5 +1,3 @@
-import type { DefineComponent, HTMLAttributes } from "vue";
+import { FlexHudProps } from './components/flexHud/model/FlexHud'
 
-export declare const BoxRebaser: DefineComponent<HTMLAttributes, {}, any>;
-export declare const HeightRebaser: DefineComponent<HTMLAttributes, {}, any>;
-export declare const WidthRebaser: DefineComponent<HTMLAttributes, {}, any>;
+export { FlexHudProps }
