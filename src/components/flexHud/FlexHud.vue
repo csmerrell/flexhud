@@ -3,7 +3,7 @@
 import { onMounted, ref } from 'vue'
 
 //Components
-import { BoxRebaser } from 'coordinate-rebaser'
+import { BoxRebaser, HeightRebaser } from 'coordinate-rebaser'
 import Header from './components/Header.vue'
 import SidePane from './components/SidePane.vue'
 import SafariPadding from './components/SafariPadding.vue'
@@ -12,7 +12,7 @@ import SafariPadding from './components/SafariPadding.vue'
 import { useFlexHud } from './store/flexHud'
 
 //types
-import type { FlexHudProps, SidePaneState } from './model/FlexHud'
+import type { FlexHudProps } from './model/FlexHud'
 
 const props = withDefaults(defineProps<FlexHudProps>(), {
   leftPaneConfig: sidePaneDefaults,
@@ -48,7 +48,16 @@ const sidePaneDefaults = () => {
 <template>
   <div ref="el" class="flex-hud">
     <Header>
-      <slot name="header" />
+      <div>
+        <slot name="header" />
+      </div>
+      <div v-if="$slots['context-anchor'] && $slots['context-menu']">
+        <HeightRebaser>
+          <ContextAnchor>
+            <slot name="context-anchor" />
+          </ContextAnchor>
+        </HeightRebaser>
+      </div>
     </Header>
     <BoxRebaser>
       <div class="hud-body">
@@ -96,14 +105,16 @@ body {
     bottom: 0;
     display: flex;
     flex-flow: row;
+    overflow: hidden;
 
     #main-panel {
       flex-grow: 1;
       flex-basis: calc(100% - var(--fh-left-pane-width) - var(--fh-right-pane-width));
     }
+
     #main-panel,
-    .left-pane,
-    .right-pane {
+    .side-pane,
+    .side-pane {
       overflow-y: auto;
     }
   }

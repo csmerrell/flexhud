@@ -11,18 +11,18 @@ const store = useFlexHud()
 
 <script lang="ts">
 const leftPaneConfig = {
-  initExpanded: true,
+  initExpanded: false,
   width: '23rem'
 }
 
 const rightPaneConfig = {
-  initExpanded: true,
+  initExpanded: false,
   width: '18rem'
 }
 const config: FlexHudProps = {
   leftPaneConfig,
   rightPaneConfig,
-  singleSidePane: false
+  singleSidePane: true
 }
 </script>
 
@@ -30,17 +30,23 @@ const config: FlexHudProps = {
   <FlexHud ref="hud" class="app" v-bind="config">
     <template #header> <div>Sample Header</div> </template>
     <template #left-pane>
-      Sample Left Pane
-      <button @click="store.collapseLeftPane">Collapse</button>
+      <div class="left-content">
+        Sample Left Pane
+        <button @click="store.collapseLeftPane">Collapse</button>
+      </div>
     </template>
     <template #main-pane>
-      Sample Main Pane
-      <button @click="store.toggleLeftPane">Toggle Left Pane</button>
-      <button @click="store.toggleRightPane">Toggle Right Pane</button>
+      <div class="main-content">
+        Sample Main Pane
+        <button @click="store.toggleLeftPane">Toggle Left Pane</button>
+        <button @click="store.toggleRightPane">Toggle Right Pane</button>
+      </div>
     </template>
     <template #right-pane>
-      Sample Right Pane
-      <button @click="store.collapseRightPane">Collapse</button>
+      <div class="right-content">
+        Sample Right Pane
+        <button @click="store.collapseRightPane">Collapse</button>
+      </div>
     </template>
   </FlexHud>
 </template>
@@ -51,23 +57,10 @@ const config: FlexHudProps = {
 @import './styles/index.scss';
 
 .app {
-  .main-header,
-  .left-pane {
-    background-color: var(--clr-bg-off);
-  }
-
-  #main-panel {
-    overflow: hidden;
-    flex-shrink: 1;
-  }
-
-  #main-right-pane,
-  #main-left-pane {
-    height: 100%;
-  }
-
-  &.flex-hud {
-    --fh-secondary: var(--clr-pale-gray);
+  .main-content,
+  .left-content,
+  .right-content {
+    padding-bottom: 100rem;
   }
 }
 </style>

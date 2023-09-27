@@ -9,8 +9,6 @@ export type SidePaneState = SidePaneProps & {
   toggling: boolean
 }
 
-export type SidePaneEmits = (event: 'toggled' | 'toggleAvailable', ...args: any[]) => void
-
 type FlexHudPropsBase = {
   compactBreakPoint?: string
   singleSidePane?: boolean
@@ -26,16 +24,3 @@ export type FlexHudState = FlexHudPropsBase & {
   leftPaneState?: SidePaneState
   rightPaneState?: SidePaneState
 }
-
-export type FlexHudEmits = (
-  event:
-    | 'leftPaneToggling'
-    | 'leftPaneToggled'
-    | 'rightPaneToggling'
-    | 'rightPaneToggled'
-    | 'sidePaneToggling'
-    | 'sidePaneToggled'
-    | 'contextMenuToggling'
-    | 'contextMenuToggled',
-  ...args: any[]
-) => void

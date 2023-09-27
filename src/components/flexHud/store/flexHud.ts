@@ -60,7 +60,7 @@ export const useFlexHud = defineStore('flexHud', {
     toggleRightPane() {
       this.rightPaneState.expanded = !this.rightPaneState.expanded
       if (this.rightPaneState.expanded && this.singleSidePane) {
-        this.collapseRightPane()
+        this.collapseLeftPane()
       }
     },
     collapseRightPane() {
@@ -69,13 +69,13 @@ export const useFlexHud = defineStore('flexHud', {
     expandRightPane() {
       this.rightPaneState.expanded = true
       if (this.singleSidePane) {
-        this.collapseRightPane()
+        this.collapseLeftPane()
       }
     },
     setRightPane(value: boolean) {
       this.rightPaneState.expanded = value
       if (this.rightPaneState.expanded && this.singleSidePane) {
-        this.collapseRightPane()
+        this.collapseLeftPane()
       }
     }
   }
