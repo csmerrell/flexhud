@@ -17,7 +17,6 @@ const props = withDefaults(defineProps<FlexHudProps>(), {
 const store = useFlexHud()
 
 if (Object.values(props).some((prop) => prop !== undefined)) {
-  debugger
   store.initState(props)
 }
 
