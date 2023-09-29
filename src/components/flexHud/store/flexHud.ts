@@ -3,14 +3,14 @@ import { defineStore } from 'pinia'
 
 const sidePaneDefaults = {
   expanded: false,
-  initExpanded: false,
+  initExpanded: true,
   transitionDelay: '.3',
   width: '20rem'
 }
 
 export const useFlexHud = defineStore('flexHud', {
   state: () => ({
-    compactBreakpoint: '800px',
+    compactBreakpoint: 640,
     singleSidePane: true,
     leftPaneState: {
       ...sidePaneDefaults,
@@ -19,16 +19,27 @@ export const useFlexHud = defineStore('flexHud', {
     rightPaneState: { ...sidePaneDefaults } as SidePaneState
   }),
 
-  getters: {},
+  getters: {
+    isCompact(state) {
+      return window.innerWidth < state.compactBreakpoint
+    }
+  },
 
   actions: {
     initState(obj: FlexHudProps) {
+      debugger
       const { leftPaneConfig, rightPaneConfig, ...stateObj } = obj
       Object.assign(this, {
         ...stateObj,
         leftPaneState: leftPaneConfig,
         rightPaneState: rightPaneConfig
       })
+    },
+    setSingleSidePane(val: boolean) {
+      this.singleSidePane = Boolean(val)
+    },
+    setCompactBreakpoint(val: number) {
+      this.compactBreakpoint = val
     },
     setLeftPaneConfig(obj: SidePaneState) {
       Object.assign(this.leftPaneState, obj)

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-//vue
-import { onMounted, ref } from 'vue'
-
 //Components
 import { BoxRebaser, HeightRebaser } from 'coordinate-rebaser'
 import Header from './components/Header.vue'
@@ -15,47 +12,38 @@ import { useFlexHud } from './store/flexHud'
 import type { FlexHudProps } from './model/FlexHud'
 
 const props = withDefaults(defineProps<FlexHudProps>(), {
-  leftPaneConfig: sidePaneDefaults,
-  rightPaneConfig: sidePaneDefaults,
-  singleSidePane: true,
-  compactBreakPoint: '800px'
+  singleSidePane: undefined
 })
-
 const store = useFlexHud()
-store.initState(props)
 
-const el = ref<HTMLDivElement | null>(null)
+if (Object.values(props).some((prop) => prop !== undefined)) {
+  debugger
+  store.initState(props)
+}
 
 defineExpose({ store })
-
-onMounted(() => {
-  if (props.leftPaneConfig.width) {
-    el.value?.style.setProperty('--fh-left-pane-width', props.leftPaneConfig.width)
-  }
-  if (props.rightPaneConfig.width) {
-    el.value?.style.setProperty('--fh-right-pane-width', props.rightPaneConfig.width)
-  }
-})
-</script>
-
-<script lang="ts">
-//defaults
-const sidePaneDefaults = () => {
-  return { initExpanded: false, width: '40rem' }
-}
 </script>
 
 <template>
-  <div ref="el" class="flex-hud">
+  <div
+    class="flex-hud"
+    :style="{
+      '--fh-compact-break': `${store.compactBreakpoint}px`
+    }"
+  >
     <Header>
       <div>
         <slot name="header" />
       </div>
-      <div v-if="$slots['context-anchor'] && $slots['context-menu']">
+      <div v-if="$slots['context-menu']">
         <HeightRebaser>
-          <ContextAnchor>
+          <ContextAnchor v-if="$slots['context-anchor']">
             <slot name="context-anchor" />
           </ContextAnchor>
+          <div v-else class="default-anchor"></div>
+          <ContextMenu>
+            <slot name="context-menu" />
+          </ContextMenu>
         </HeightRebaser>
       </div>
     </Header>

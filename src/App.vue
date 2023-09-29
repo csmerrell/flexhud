@@ -3,31 +3,13 @@
  * An applet stub component to test the flex-hud component(s)
  */
 import FlexHud from '@/components/flexHud/FlexHud.vue'
-import type { FlexHudProps } from './components/flexHud/model/FlexHud'
 import { useFlexHud } from './components/flexHud/store/flexHud'
 
 const store = useFlexHud()
 </script>
 
-<script lang="ts">
-const leftPaneConfig = {
-  initExpanded: false,
-  width: '23rem'
-}
-
-const rightPaneConfig = {
-  initExpanded: false,
-  width: '18rem'
-}
-const config: FlexHudProps = {
-  leftPaneConfig,
-  rightPaneConfig,
-  singleSidePane: true
-}
-</script>
-
 <template>
-  <FlexHud ref="hud" class="app" v-bind="config">
+  <FlexHud class="app">
     <template #header> <div>Sample Header</div> </template>
     <template #left-pane>
       <div class="left-content">

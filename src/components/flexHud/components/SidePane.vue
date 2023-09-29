@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useFlexHud } from '../store/flexHud'
 import type { Store } from 'pinia'
 import type { SidePaneState } from '../model/FlexHud'
@@ -16,10 +16,15 @@ const paneState = computed(() => {
 
 paneState.value.expanded = Boolean(paneState.value.initExpanded)
 
+if (side === 'right' && store.leftPaneState.expanded) {
+  paneState.value.expanded = false
+}
+
 const expanded = computed(() => {
   return paneState.value.expanded
 })
 
+const el = ref<HTMLElement | null>(null)
 const removeToggling = () => {
   paneState.value.toggling = false
   el.value!.removeEventListener('transitionend', removeToggling)
@@ -31,29 +36,22 @@ watch(expanded, () => {
     el.value.addEventListener('transitionend', removeToggling)
   }
 })
-
-//mounted
-const el = ref<HTMLElement | null>(null)
-onMounted(() => {
-  if (paneState.value.width) {
-    el.value?.style.setProperty('--fh-width', paneState.value.width)
-  }
-  if (paneState.value.transitionDelay) {
-    el.value?.style.setProperty('--fh-width-transition', paneState.value.transitionDelay)
-  }
-})
 </script>
 
 <template>
   <div
     ref="el"
+    class="side-pane"
     :class="{
       [side]: true,
       collapsed: !expanded,
       expanded: expanded,
       toggling: paneState.toggling
     }"
-    class="side-pane"
+    :style="{
+      '--fh-width': paneState.width,
+      '--fh-width-transition': paneState.transitionDelay
+    }"
   >
     <div ref="contentEl" class="pane-contents">
       <slot />
@@ -83,6 +81,11 @@ onMounted(() => {
   &.expanded {
     flex-basis: var(--fh-width);
     width: var(--fh-width);
+    width: var(--fh-compact-break);
+    @media screen and (min-width: var(--fh-compact-break)) {
+      flex-basis: 100%;
+      width: 100%;
+    }
   }
 
   &.expanded,
