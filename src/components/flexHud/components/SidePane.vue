@@ -30,12 +30,15 @@ const removeToggling = () => {
   el.value!.removeEventListener('transitionend', removeToggling)
 }
 
-watch(expanded, () => {
+const startToggle = () => {
   if (el.value) {
     paneState.value.toggling = true
     el.value.addEventListener('transitionend', removeToggling)
   }
-})
+}
+watch(expanded, startToggle)
+const isCompact = computed(() => store.isCompact)
+watch(isCompact, startToggle)
 </script>
 
 <template>
@@ -46,7 +49,8 @@ watch(expanded, () => {
       [side]: true,
       collapsed: !expanded,
       expanded: expanded,
-      toggling: paneState.toggling
+      toggling: paneState.toggling,
+      compact: store.isCompact
     }"
     :style="{
       '--fh-width': paneState.width,
@@ -61,7 +65,7 @@ watch(expanded, () => {
 
 <style scoped lang="scss">
 .side-pane {
-  --fh-width-transition: 0.5s;
+  --fh-width-transition: 0.3s;
   --fh-width: 20rem;
   position: relative;
   transition:
@@ -79,10 +83,9 @@ watch(expanded, () => {
   }
 
   &.expanded {
-    flex-basis: var(--fh-width);
-    width: var(--fh-width);
-    width: var(--fh-compact-break);
-    @media screen and (min-width: var(--fh-compact-break)) {
+    flex-basis: 20rem;
+    width: 20rem;
+    &.compact {
       flex-basis: 100%;
       width: 100%;
     }

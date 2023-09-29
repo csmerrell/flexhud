@@ -10,6 +10,7 @@ import { useFlexHud } from './store/flexHud'
 
 //types
 import type { FlexHudProps } from './model/FlexHud'
+import { computed, onUnmounted } from 'vue'
 
 const props = withDefaults(defineProps<FlexHudProps>(), {
   singleSidePane: undefined
@@ -20,16 +21,34 @@ if (Object.values(props).some((prop) => prop !== undefined)) {
   store.initState(props)
 }
 
+const collapseMainPane = computed(() => {
+  return store.isCompact && (store.leftPaneState.expanded || store.rightPaneState.expanded)
+})
+
+const mainPaneToggling = computed(() => {
+  return store.isCompact && (store.leftPaneState.toggling || store.rightPaneState.toggling)
+})
+
 defineExpose({ store })
+
+const debounceResize = () => {
+  store.lastFlexHudResize = Date.now()
+  const debounceTimer = 100
+  setTimeout(() => {
+    if (Date.now() - store.lastFlexHudResize < debounceTimer) return
+    store.windowWidth = window.innerWidth
+  }, 100)
+}
+
+window.addEventListener('resize', debounceResize)
+
+onUnmounted(() => {
+  window.removeEventListener('resize', debounceResize)
+})
 </script>
 
 <template>
-  <div
-    class="flex-hud"
-    :style="{
-      '--fh-compact-break': `${store.compactBreakpoint}px`
-    }"
-  >
+  <div class="flex-hud">
     <Header>
       <div>
         <slot name="header" />
@@ -52,11 +71,19 @@ defineExpose({ store })
           <slot name="left-pane" />
           <SafariPadding />
         </SidePane>
-        <div v-if="$slots['main-pane']" id="main-panel">
+        <div
+          v-if="$slots['main-pane']"
+          id="main-panel"
+          :class="{ collapsed: collapseMainPane, toggling: mainPaneToggling }"
+        >
           <slot name="main-pane" />
           <SafariPadding />
         </div>
-        <div v-else id="main-panel">
+        <div
+          v-else
+          id="main-panel"
+          :class="{ collapsed: collapseMainPane, toggling: mainPaneToggling }"
+        >
           <slot />
           <SafariPadding />
         </div>
@@ -97,6 +124,16 @@ body {
     #main-panel {
       flex-grow: 1;
       flex-basis: calc(100% - var(--fh-left-pane-width) - var(--fh-right-pane-width));
+
+      &.collapsed {
+        flex-basis: 0;
+      }
+
+      &.toggling {
+        transition: flex-basis 1s linear;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
 
     #main-panel,
@@ -105,5 +142,10 @@ body {
       overflow-y: auto;
     }
   }
+}
+</style>
+<style>
+:root {
+  --fh-compact-break: 640px;
 }
 </style>
