@@ -37,8 +37,6 @@ const startToggle = () => {
   }
 }
 watch(expanded, startToggle)
-const isCompact = computed(() => store.isCompact)
-watch(isCompact, startToggle)
 </script>
 
 <template>

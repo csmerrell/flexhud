@@ -12,7 +12,7 @@ import { useFlexHudStore } from './store/flexHud'
 
 //types
 import type { FlexHudProps } from './model/FlexHud'
-import { computed, onUnmounted } from 'vue'
+import { onUnmounted } from 'vue'
 
 const props = withDefaults(defineProps<FlexHudProps>(), {
   singleSidePane: undefined
@@ -22,14 +22,6 @@ const store = useFlexHudStore()
 if (Object.values(props).some((prop) => prop !== undefined)) {
   store.initState(props)
 }
-
-const collapseMainPane = computed(() => {
-  return store.isCompact && (store.leftPaneState.expanded || store.rightPaneState.expanded)
-})
-
-const mainPaneToggling = computed(() => {
-  return store.isCompact && (store.leftPaneState.toggling || store.rightPaneState.toggling)
-})
 
 defineExpose({ store })
 
@@ -74,7 +66,7 @@ onUnmounted(() => {
         <div
           v-if="$slots['main-pane']"
           id="main-panel"
-          :class="{ collapsed: collapseMainPane, toggling: mainPaneToggling }"
+          :class="{ collapsed: store.mainPaneCollapsed, toggling: store.mainPaneToggling }"
         >
           <slot name="main-pane" />
           <SafariPadding />
@@ -82,7 +74,7 @@ onUnmounted(() => {
         <div
           v-else
           id="main-panel"
-          :class="{ collapsed: collapseMainPane, toggling: mainPaneToggling }"
+          :class="{ collapsed: store.mainPaneCollapsed, toggling: store.mainPaneToggling }"
         >
           <slot />
           <SafariPadding />

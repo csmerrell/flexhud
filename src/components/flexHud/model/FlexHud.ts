@@ -1,5 +1,5 @@
 type FlexHudPropsBase = {
-  compactBreakPoint?: string
+  compactBreakpoint?: number
   singleSidePane?: boolean
 }
 

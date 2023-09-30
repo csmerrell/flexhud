@@ -22,7 +22,15 @@ export const useFlexHudStore = defineStore('flexHud', {
   }),
 
   getters: {
+    //type-inferrable
     isCompact: (state) => state.windowWidth < state.compactBreakpoint,
+    mainPaneToggling: (state) => {
+      return state.leftPaneState.toggling || state.rightPaneState.toggling
+    },
+    //type-explicit (uses both `state` & `this`)
+    mainPaneCollapsed(state): boolean {
+      return this.isCompact && (state.leftPaneState.expanded || state.rightPaneState.expanded)
+    },
     mutuallyExcludeSidePanes(state): boolean {
       return this.isCompact || state.singleSidePane
     }
