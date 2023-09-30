@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useFlexHud } from '../store/flexHud'
+import { useFlexHudStore } from '../store/flexHud'
 import type { Store } from 'pinia'
 import type { SidePaneState } from '../model/FlexHud'
 
 const props = defineProps<{ side: 'right' | 'left' }>()
 const { side } = props
 
-const store = useFlexHud()
+const store = useFlexHudStore()
 
 const paneState = computed(() => {
   const paneStateKey = `${side}PaneState` as keyof Store
@@ -83,8 +83,8 @@ watch(isCompact, startToggle)
   }
 
   &.expanded {
-    flex-basis: 20rem;
-    width: 20rem;
+    flex-basis: var(--fh-width);
+    width: var(--fh-width-transition);
     &.compact {
       flex-basis: 100%;
       width: 100%;

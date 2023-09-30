@@ -3,9 +3,9 @@
  * An applet stub component to test the flex-hud component(s)
  */
 import FlexHud from '@/components/flexHud/FlexHud.vue'
-import { useFlexHud } from './components/flexHud/store/flexHud'
+import { useFlexHudStore } from './components/flexHud/store/flexHud'
 
-const store = useFlexHud()
+const store = useFlexHudStore()
 </script>
 
 <template>
@@ -36,8 +36,6 @@ const store = useFlexHud()
 <style scoped lang="scss"></style>
 
 <style lang="scss">
-@import './styles/index.scss';
-
 .app {
   .main-content,
   .left-content,

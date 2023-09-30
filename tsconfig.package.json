@@ -1,0 +1,22 @@
+{
+  "extends": "@vue/tsconfig/recommended",
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "exclude": ["node_modules", "src/**/__tests__/*"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "module": "commonjs",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    //...
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "skipLibCheck": true,
+  }
+}

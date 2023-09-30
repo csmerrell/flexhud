@@ -16,8 +16,8 @@ export type FlexHudState = FlexHudPropsBase & {
 
 export type SidePaneProps = {
   initExpanded?: boolean
-  transitionDelay: string
-  width: string
+  transitionDelay?: string
+  width?: string
 }
 
 export type SidePaneState = SidePaneProps & {

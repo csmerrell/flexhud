@@ -8,7 +8,7 @@ const sidePaneDefaults = {
   width: '20rem'
 }
 
-export const useFlexHud = defineStore('flexHud', {
+export const useFlexHudStore = defineStore('flexHud', {
   state: () => ({
     compactBreakpoint: 640,
     windowWidth: window.innerWidth,
@@ -22,8 +22,9 @@ export const useFlexHud = defineStore('flexHud', {
   }),
 
   getters: {
-    isCompact(state) {
-      return state.windowWidth < state.compactBreakpoint
+    isCompact: (state) => state.windowWidth < state.compactBreakpoint,
+    mutuallyExcludeSidePanes(state): boolean {
+      return this.isCompact || state.singleSidePane
     }
   },
 

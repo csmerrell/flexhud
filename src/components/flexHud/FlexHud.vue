@@ -2,11 +2,13 @@
 //Components
 import { BoxRebaser, HeightRebaser } from 'coordinate-rebaser'
 import Header from './components/Header.vue'
+import ContextAnchor from './components/ContextAnchor.vue'
+import ContextMenu from './components/ContextMenu.vue'
 import SidePane from './components/SidePane.vue'
 import SafariPadding from './components/SafariPadding.vue'
 
 //store
-import { useFlexHud } from './store/flexHud'
+import { useFlexHudStore } from './store/flexHud'
 
 //types
 import type { FlexHudProps } from './model/FlexHud'
@@ -15,7 +17,7 @@ import { computed, onUnmounted } from 'vue'
 const props = withDefaults(defineProps<FlexHudProps>(), {
   singleSidePane: undefined
 })
-const store = useFlexHud()
+const store = useFlexHudStore()
 
 if (Object.values(props).some((prop) => prop !== undefined)) {
   store.initState(props)
@@ -50,9 +52,7 @@ onUnmounted(() => {
 <template>
   <div class="flex-hud">
     <Header>
-      <div>
-        <slot name="header" />
-      </div>
+      <slot name="header" />
       <div v-if="$slots['context-menu']">
         <HeightRebaser>
           <ContextAnchor v-if="$slots['context-anchor']">
